@@ -20,4 +20,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/check-username/{username}', [RegisterController::class, 'checkUsername']);
 Route::resource('/registration', RegisterController::class);

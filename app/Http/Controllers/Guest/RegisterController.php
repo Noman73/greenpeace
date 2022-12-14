@@ -37,16 +37,17 @@ class RegisterController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->all();
         $validator=Validator::make($request->all(),[
             'first_name'=>"required|max:200|min:1",
             'last_name'=>"required|max:200|min:1",
-            'username'=>"required|max:200|min:1",
+            'username'=>"required|max:200|min:1|unique:users,username",
             'sponsor_username'=>"required|max:200|min:1",
             'position'=>"required|max:200|min:1",
             'gender'=>"required|max:200|min:1",
             'email'=>"required|max:200|min:1",
             'phone'=>"required|max:200|min:1",
-            'password'=>"required|max:200|min:1",
+            'password'=>"required|max:200|min:1|confirmed",
         ]);
         if($validator->passes()){
             $user=new User;
@@ -61,7 +62,7 @@ class RegisterController extends Controller
             $user->password=Hash::make($request->password);
             $user->save();
             if ($user) {
-                return response()->json(['message'=>'Category Added Success']);
+                return response()->json(['message'=>'User Added Success']);
             }
         }
         return response()->json(['error'=>$validator->getMessageBag()]);
@@ -110,5 +111,14 @@ class RegisterController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function checkUsername($username){
+        $user=User::where('username',$username)->count();
+        if($user>0){
+            return 'false';
+        }else{
+            return 'true';
+        }
+
     }
 }

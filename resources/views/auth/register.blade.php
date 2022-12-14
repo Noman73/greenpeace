@@ -122,22 +122,30 @@
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <h3 class="register-heading">Free Registration</h3>
                                 
-                                  <form action="{{route('registration.store')}}" method="POST">
-                                    @csrf
+                                  
                                     <div class="row register-form">
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="first_name" placeholder="First Name *" value="" />
+                                                <div class="invalid-feedback" id='first_name_msg'></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="last_name" placeholder="Last Name *" value="" />
+                                                <div class="invalid-feedback" id='last_name_msg'></div>
+                                            </div>
+                                        </div>
                                         <div class="col-md-12">
+                                            
                                           <div class="form-group">
-                                              <input type="text" class="form-control" name="first_name" placeholder="First Name *" value="" />
-                                              <div class="invalid-feedback" id=''></div>
+                                            <input type="text" class="form-control is-valid" id="username" placeholder="Username" value="" />
+                                            <div class="invalid-feedback" id='username_msg'></div>
                                           </div>
                                           <div class="form-group">
-                                              <input type="text" class="form-control" name="last_name" placeholder="Last Name *" value="" />
-                                          </div>
-                                          <div class="form-group">
-                                            <input type="text" class="form-control is-valid" name="username" placeholder="Username" value="" />
-                                          </div>
-                                          <div class="form-group">
-                                            <input type="text" class="form-control is-valid" name="sponsor_username" placeholder="Sponsor Username" value="" />
+                                            <input type="text" class="form-control is-valid" id="sponsor_username" placeholder="Sponsor Username" value="" />
+                                            <div class="invalid-feedback" id='sponsor_username_msg'></div>
+
                                           </div>
                                           <div class="form-group">
                                             <label for="">position</label>
@@ -154,6 +162,7 @@
                                                     <input type="radio" name="position" value="3" >
                                                     <span>C </span> 
                                                 </label>
+                                                <div class="invalid-feedback" id='position_msg'></div>
                                               </div>
                                           </div>
                                           <div class="form-group">
@@ -167,26 +176,44 @@
                                                       <input type="radio" name="gender" value="female" >
                                                       <span>Female </span> 
                                                   </label>
+                                                <div class="invalid-feedback" id='gender_msg'></div>
                                               </div>
                                           </div>
                                       </div>
                                       <div class="col-md-12">
                                           <div class="form-group">
-                                              <input type="email" class="form-control" placeholder="Your Email *" value="" name="email"/>
+                                              <input type="email" class="form-control" placeholder="Your Email *" value="" id="email"/>
                                           </div>
                                           <div class="form-group">
-                                              <input type="text"  name="phone" class="form-control" placeholder="Your Phone " value="" />
+                                            <select name="country" id="country" class="form-control">
+                                                @php
+                                                   $country=App\Models\Country::all(); 
+                                                @endphp
+                                                <option value="">---SELECT---</option>
+                                                @foreach($country as $data)
+                                                <option value="{{$data->id}}">{{$data->country_name}}</option>
+                                                @endforeach
+                                            </select>
+                                            <div class="invalid-feedback" id='country_msg'></div>
+
+                                        </div>
+                                          <div class="form-group">
+                                              <input type="text"  id="phone" class="form-control" placeholder="Your Phone " value="" />
+                                              <div class="invalid-feedback" id='phone_msg'></div>
+
                                           </div>
                                           <div class="form-group">
-                                            <input type="password" class="form-control" name="password" placeholder="Password *" value="" />
+                                            <input type="password" class="form-control" id="password" placeholder="Password *" value="" />
+                                            <div class="invalid-feedback" id='password_msg'></div>
+
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control" name="password_confirmation"  placeholder="Confirm Password *" value="" />
+                                            <input type="password" class="form-control" id="password_confirmation"  placeholder="Confirm Password *" value="" />
+                                            <div class="invalid-feedback" id='password_confirmation_msg'></div>
                                         </div>
-                                          <input type="submit" class="btnRegister"  value="Register"/>
+                                          <button type="submit"  class="btnRegister"  onclick="formRequest()">Submit</button>
                                       </div>
                                     </div>
-                                  </form>
                                     
                                 
                             </div>
@@ -196,4 +223,7 @@
                 </div>
 
             </div>
+@endsection
+@section('script')
+@include('auth.internal-assets.js.register-script')
 @endsection
